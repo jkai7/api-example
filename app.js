@@ -8,11 +8,12 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const Character    = require('./models/character-schema')//==connect character schema
 
 
 mongoose.Promise = Promise;
-mongoose
-  .connect('mongodb://localhost/api-eaxample', {useMongoClient: true})
+mongoose                 //==name of database
+  .connect('mongodb://localhost/api-example', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
@@ -53,6 +54,10 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 const index = require('./routes/index');
 app.use('/', index);
+
+//==where our created api routes go
+const apiRoutes = require('./routes/characters-api');
+app.use('/api', apiRoutes);//=pre-fix before routes, can be whatever name you want
 
 
 module.exports = app;
